@@ -291,16 +291,70 @@ namespace AndroidPackagePublisher
             }
         }
 
+        public bool IsGameFileIn(string fileName)
+        {
+            string apkDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录");
+            return File.Exists(Path.Combine(apkDir,fileName));
+        }
 
-        private void button_Shot_GetNewGame_Click(object sender, EventArgs e)
+
+        private async void button_Shot_GetNewGame_Click(object sender, EventArgs e)
         {
             try
             {
-                
+                SetStatusInfo("正在执行……");
+
+                _pushGameInfo = HttpDataHelper.GetOneGameInfoAndChangeStateRandomForDev("安卓待提交", "安卓开发中");
+
+                this.textBox_GameDetails.Text = _pushGameInfo.GameDetails;
+                this.textBox_GameName.Text = _pushGameInfo.GameName;
+                this.textBox_DevAccount.Text = _pushGameInfo.RealDevAccount;
+                this.textBox_DevPassword.Text = _pushGameInfo.RealDevPassword;
+
+                SetStatusInfo("清理路径中……");
+                ClearTempDir();
+
+                SetStatusInfo("反编译中……");
+                await DecompileGame(_pushGameInfo.FileName);
+
+                SetStatusInfo("替换图标中……");
+                DownloadIcon(_pushGameInfo.FileName, _pushGameInfo.LogoPath);
+
+                SetStatusInfo("写入谷歌广告……");
+                SetAdmobAds(_pushGameInfo.GoogleBanner, false, _pushGameInfo.GoogleChaping, true);
+
+                SetStatusInfo("写入游戏名字……");
+                SetGameName(_pushGameInfo.GameName);
+
+                SetStatusInfo("修改包名……");
+                SetPackageName();
+
+                SetStatusInfo("编译中……");
+                CompileFucking();
+
+                SetStatusInfo("签名中……");
+                SignFucking(_pushGameInfo.FileName);
+
+                SetStatusInfo("复制截屏……");
+                CopyPngFiles(_pushGameInfo.FileName);
+
+                if(IsGameFileIn(_pushGameInfo.FileName))
+                {
+                    string fileDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "android", Path.GetFileNameWithoutExtension(fileName));
+                    string apkDir =
+
+                    this.textBox_PackageDir.Text = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录");                    SetDevelopingButtonEnable();
+                    SetTipsInfo("打包成功，请到 安装包目录 下的 apk 文件提交到商店，完成后点击 提交完成 按钮");
+                    SetStatusInfo("打包成功.");
+                }
+                else
+                {
+                    throw new Exception(string.Format("没有打包成游戏文件！请重试或联系我！"));
+                }
             }
             catch (Exception ex)
             {
-                throw;
+                SetStatusInfo("打包游戏失败,\n" + ex.Message);
             }
         }
     }
