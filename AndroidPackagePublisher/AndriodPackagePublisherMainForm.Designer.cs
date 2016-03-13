@@ -68,6 +68,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox_KeyWords = new System.Windows.Forms.TextBox();
+            this.button_CopyKeyWords = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -87,7 +90,7 @@
             // button_CopyKeyWords4
             // 
             this.button_CopyKeyWords4.Location = new System.Drawing.Point(675, 506);
-            this.button_CopyKeyWords4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyKeyWords4.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyKeyWords4.Name = "button_CopyKeyWords4";
             this.button_CopyKeyWords4.Size = new System.Drawing.Size(56, 18);
             this.button_CopyKeyWords4.TabIndex = 63;
@@ -98,7 +101,7 @@
             // button_CopyKeyWords3
             // 
             this.button_CopyKeyWords3.Location = new System.Drawing.Point(268, 501);
-            this.button_CopyKeyWords3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyKeyWords3.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyKeyWords3.Name = "button_CopyKeyWords3";
             this.button_CopyKeyWords3.Size = new System.Drawing.Size(56, 18);
             this.button_CopyKeyWords3.TabIndex = 64;
@@ -109,7 +112,7 @@
             // textBox_KeyWords4
             // 
             this.textBox_KeyWords4.Location = new System.Drawing.Point(485, 506);
-            this.textBox_KeyWords4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_KeyWords4.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_KeyWords4.Name = "textBox_KeyWords4";
             this.textBox_KeyWords4.ReadOnly = true;
             this.textBox_KeyWords4.Size = new System.Drawing.Size(186, 21);
@@ -119,7 +122,7 @@
             // textBox_KeyWords3
             // 
             this.textBox_KeyWords3.Location = new System.Drawing.Point(79, 500);
-            this.textBox_KeyWords3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_KeyWords3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_KeyWords3.Name = "textBox_KeyWords3";
             this.textBox_KeyWords3.ReadOnly = true;
             this.textBox_KeyWords3.Size = new System.Drawing.Size(186, 21);
@@ -151,12 +154,13 @@
             // button_CopyGameDetails
             // 
             this.button_CopyGameDetails.Location = new System.Drawing.Point(743, 313);
-            this.button_CopyGameDetails.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyGameDetails.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyGameDetails.Name = "button_CopyGameDetails";
             this.button_CopyGameDetails.Size = new System.Drawing.Size(97, 29);
             this.button_CopyGameDetails.TabIndex = 58;
             this.button_CopyGameDetails.Text = "复制";
             this.button_CopyGameDetails.UseVisualStyleBackColor = true;
+            this.button_CopyGameDetails.Click += new System.EventHandler(this.button_CopyGameDetails_Click);
             // 
             // label11
             // 
@@ -175,7 +179,7 @@
             this.button_RePackage.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_RePackage.ForeColor = System.Drawing.Color.DarkRed;
             this.button_RePackage.Location = new System.Drawing.Point(743, 422);
-            this.button_RePackage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_RePackage.Margin = new System.Windows.Forms.Padding(2);
             this.button_RePackage.Name = "button_RePackage";
             this.button_RePackage.Size = new System.Drawing.Size(97, 37);
             this.button_RePackage.TabIndex = 66;
@@ -185,7 +189,7 @@
             // textBox_NewGameName
             // 
             this.textBox_NewGameName.Location = new System.Drawing.Point(79, 432);
-            this.textBox_NewGameName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_NewGameName.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_NewGameName.Name = "textBox_NewGameName";
             this.textBox_NewGameName.Size = new System.Drawing.Size(657, 21);
             this.textBox_NewGameName.TabIndex = 69;
@@ -193,7 +197,7 @@
             // textBox_GameDetails
             // 
             this.textBox_GameDetails.Location = new System.Drawing.Point(85, 316);
-            this.textBox_GameDetails.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_GameDetails.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_GameDetails.Name = "textBox_GameDetails";
             this.textBox_GameDetails.ReadOnly = true;
             this.textBox_GameDetails.Size = new System.Drawing.Size(654, 21);
@@ -226,7 +230,7 @@
             this.button_DevAccountDie.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_DevAccountDie.ForeColor = System.Drawing.Color.Firebrick;
             this.button_DevAccountDie.Location = new System.Drawing.Point(577, 126);
-            this.button_DevAccountDie.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_DevAccountDie.Margin = new System.Windows.Forms.Padding(2);
             this.button_DevAccountDie.Name = "button_DevAccountDie";
             this.button_DevAccountDie.Size = new System.Drawing.Size(99, 41);
             this.button_DevAccountDie.TabIndex = 3;
@@ -238,7 +242,7 @@
             this.button_DisableIt.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_DisableIt.ForeColor = System.Drawing.Color.Red;
             this.button_DisableIt.Location = new System.Drawing.Point(741, 126);
-            this.button_DisableIt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_DisableIt.Margin = new System.Windows.Forms.Padding(2);
             this.button_DisableIt.Name = "button_DisableIt";
             this.button_DisableIt.Size = new System.Drawing.Size(99, 41);
             this.button_DisableIt.TabIndex = 3;
@@ -248,7 +252,7 @@
             // button_SubmitGameInfo
             // 
             this.button_SubmitGameInfo.Location = new System.Drawing.Point(308, 126);
-            this.button_SubmitGameInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_SubmitGameInfo.Margin = new System.Windows.Forms.Padding(2);
             this.button_SubmitGameInfo.Name = "button_SubmitGameInfo";
             this.button_SubmitGameInfo.Size = new System.Drawing.Size(99, 41);
             this.button_SubmitGameInfo.TabIndex = 2;
@@ -258,7 +262,7 @@
             // textBox_GameName
             // 
             this.textBox_GameName.Location = new System.Drawing.Point(85, 243);
-            this.textBox_GameName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_GameName.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_GameName.Name = "textBox_GameName";
             this.textBox_GameName.ReadOnly = true;
             this.textBox_GameName.Size = new System.Drawing.Size(654, 21);
@@ -267,17 +271,18 @@
             // button_CopyGameName
             // 
             this.button_CopyGameName.Location = new System.Drawing.Point(743, 246);
-            this.button_CopyGameName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyGameName.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyGameName.Name = "button_CopyGameName";
             this.button_CopyGameName.Size = new System.Drawing.Size(97, 18);
             this.button_CopyGameName.TabIndex = 54;
             this.button_CopyGameName.Text = "复制";
             this.button_CopyGameName.UseVisualStyleBackColor = true;
+            this.button_CopyGameName.Click += new System.EventHandler(this.button_CopyGameName_Click);
             // 
             // button_Shot_GetNewGame
             // 
             this.button_Shot_GetNewGame.Location = new System.Drawing.Point(15, 126);
-            this.button_Shot_GetNewGame.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_Shot_GetNewGame.Margin = new System.Windows.Forms.Padding(2);
             this.button_Shot_GetNewGame.Name = "button_Shot_GetNewGame";
             this.button_Shot_GetNewGame.Size = new System.Drawing.Size(99, 41);
             this.button_Shot_GetNewGame.TabIndex = 0;
@@ -307,17 +312,18 @@
             // button_CopyDevPassword
             // 
             this.button_CopyDevPassword.Location = new System.Drawing.Point(680, 280);
-            this.button_CopyDevPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyDevPassword.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyDevPassword.Name = "button_CopyDevPassword";
             this.button_CopyDevPassword.Size = new System.Drawing.Size(56, 18);
             this.button_CopyDevPassword.TabIndex = 53;
             this.button_CopyDevPassword.Text = "复制";
             this.button_CopyDevPassword.UseVisualStyleBackColor = true;
+            this.button_CopyDevPassword.Click += new System.EventHandler(this.button_CopyDevPassword_Click);
             // 
             // button_CopyKeyWords2
             // 
             this.button_CopyKeyWords2.Location = new System.Drawing.Point(675, 482);
-            this.button_CopyKeyWords2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyKeyWords2.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyKeyWords2.Name = "button_CopyKeyWords2";
             this.button_CopyKeyWords2.Size = new System.Drawing.Size(56, 18);
             this.button_CopyKeyWords2.TabIndex = 50;
@@ -328,17 +334,18 @@
             // button_CopyDevAccount
             // 
             this.button_CopyDevAccount.Location = new System.Drawing.Point(274, 280);
-            this.button_CopyDevAccount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyDevAccount.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyDevAccount.Name = "button_CopyDevAccount";
             this.button_CopyDevAccount.Size = new System.Drawing.Size(56, 18);
             this.button_CopyDevAccount.TabIndex = 52;
             this.button_CopyDevAccount.Text = "复制";
             this.button_CopyDevAccount.UseVisualStyleBackColor = true;
+            this.button_CopyDevAccount.Click += new System.EventHandler(this.button_CopyDevAccount_Click);
             // 
             // button_CopyKeyWords1
             // 
             this.button_CopyKeyWords1.Location = new System.Drawing.Point(268, 477);
-            this.button_CopyKeyWords1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_CopyKeyWords1.Margin = new System.Windows.Forms.Padding(2);
             this.button_CopyKeyWords1.Name = "button_CopyKeyWords1";
             this.button_CopyKeyWords1.Size = new System.Drawing.Size(56, 18);
             this.button_CopyKeyWords1.TabIndex = 51;
@@ -349,7 +356,7 @@
             // textBox_DevPassword
             // 
             this.textBox_DevPassword.Location = new System.Drawing.Point(490, 279);
-            this.textBox_DevPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_DevPassword.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_DevPassword.Name = "textBox_DevPassword";
             this.textBox_DevPassword.ReadOnly = true;
             this.textBox_DevPassword.Size = new System.Drawing.Size(186, 21);
@@ -358,7 +365,7 @@
             // textBox_KeyWords2
             // 
             this.textBox_KeyWords2.Location = new System.Drawing.Point(485, 482);
-            this.textBox_KeyWords2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_KeyWords2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_KeyWords2.Name = "textBox_KeyWords2";
             this.textBox_KeyWords2.ReadOnly = true;
             this.textBox_KeyWords2.Size = new System.Drawing.Size(186, 21);
@@ -368,7 +375,7 @@
             // textBox_DevAccount
             // 
             this.textBox_DevAccount.Location = new System.Drawing.Point(84, 279);
-            this.textBox_DevAccount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_DevAccount.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_DevAccount.Name = "textBox_DevAccount";
             this.textBox_DevAccount.ReadOnly = true;
             this.textBox_DevAccount.Size = new System.Drawing.Size(186, 21);
@@ -377,7 +384,7 @@
             // textBox_KeyWords1
             // 
             this.textBox_KeyWords1.Location = new System.Drawing.Point(79, 476);
-            this.textBox_KeyWords1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_KeyWords1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_KeyWords1.Name = "textBox_KeyWords1";
             this.textBox_KeyWords1.ReadOnly = true;
             this.textBox_KeyWords1.Size = new System.Drawing.Size(186, 21);
@@ -439,17 +446,18 @@
             // button_OpenPackageDir
             // 
             this.button_OpenPackageDir.Location = new System.Drawing.Point(743, 202);
-            this.button_OpenPackageDir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_OpenPackageDir.Margin = new System.Windows.Forms.Padding(2);
             this.button_OpenPackageDir.Name = "button_OpenPackageDir";
             this.button_OpenPackageDir.Size = new System.Drawing.Size(99, 25);
             this.button_OpenPackageDir.TabIndex = 39;
             this.button_OpenPackageDir.Text = "打开";
             this.button_OpenPackageDir.UseVisualStyleBackColor = true;
+            this.button_OpenPackageDir.Click += new System.EventHandler(this.button_OpenPackageDir_Click);
             // 
             // textBox_PackageDir
             // 
             this.textBox_PackageDir.Location = new System.Drawing.Point(85, 206);
-            this.textBox_PackageDir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_PackageDir.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_PackageDir.Name = "textBox_PackageDir";
             this.textBox_PackageDir.ReadOnly = true;
             this.textBox_PackageDir.Size = new System.Drawing.Size(654, 21);
@@ -487,13 +495,43 @@
             this.groupBox1.Controls.Add(this.button_Shot_GetNewGame);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(849, 195);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "主控信息";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(19, 357);
+            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "关键词：";
+            // 
+            // textBox_KeyWords
+            // 
+            this.textBox_KeyWords.Location = new System.Drawing.Point(85, 357);
+            this.textBox_KeyWords.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox_KeyWords.Name = "textBox_KeyWords";
+            this.textBox_KeyWords.ReadOnly = true;
+            this.textBox_KeyWords.Size = new System.Drawing.Size(654, 21);
+            this.textBox_KeyWords.TabIndex = 57;
+            // 
+            // button_CopyKeyWords
+            // 
+            this.button_CopyKeyWords.Location = new System.Drawing.Point(743, 354);
+            this.button_CopyKeyWords.Margin = new System.Windows.Forms.Padding(2);
+            this.button_CopyKeyWords.Name = "button_CopyKeyWords";
+            this.button_CopyKeyWords.Size = new System.Drawing.Size(97, 29);
+            this.button_CopyKeyWords.TabIndex = 58;
+            this.button_CopyKeyWords.Text = "复制";
+            this.button_CopyKeyWords.UseVisualStyleBackColor = true;
+            this.button_CopyKeyWords.Click += new System.EventHandler(this.button_CopyKeyWords_Click);
             // 
             // AndriodPackagePublisherMainForm
             // 
@@ -507,13 +545,16 @@
             this.Controls.Add(this.textBox_KeyWords3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.button_CopyKeyWords);
             this.Controls.Add(this.button_CopyGameDetails);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.button_RePackage);
             this.Controls.Add(this.textBox_NewGameName);
+            this.Controls.Add(this.textBox_KeyWords);
             this.Controls.Add(this.textBox_GameDetails);
             this.Controls.Add(this.textBox_GameName);
             this.Controls.Add(this.button_CopyGameName);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button_CopyDevPassword);
             this.Controls.Add(this.button_CopyKeyWords2);
@@ -533,7 +574,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AndriodPackagePublisherMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "☺ 安卓游戏 打包发布 ☺";
@@ -588,6 +629,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox_KeyWords;
+        private System.Windows.Forms.Button button_CopyKeyWords;
     }
 }
 

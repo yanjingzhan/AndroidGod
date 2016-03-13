@@ -37,6 +37,8 @@ namespace AndroidPackagePublisher
             this.button_SubmitGameInfo.Enabled = false;
             this.button_DevAccountDie.Enabled = false;
             this.button_RePackage.Enabled = false;
+            this.button_CopyKeyWords.Enabled = false;
+
 
             this.textBox_PackageDir.Clear();
             this.textBox_GameDetails.Clear();
@@ -60,6 +62,7 @@ namespace AndroidPackagePublisher
             this.button_SubmitGameInfo.Enabled = true;
             this.button_DevAccountDie.Enabled = true;
             this.button_RePackage.Enabled = true;
+            this.button_CopyKeyWords.Enabled = true;
         }
 
         public AndriodPackagePublisherMainForm()
@@ -136,6 +139,15 @@ namespace AndroidPackagePublisher
             Directory.Delete(unzipPackagePath, true);
         }
 
+        private void RepairYmlFile()
+        {
+            string tempDir = AppDomain.CurrentDomain.BaseDirectory + "temp";
+            string ymlFile = Path.Combine(tempDir, "unzip\\apktool.yml");
+
+            string content = File.ReadAllText(ymlFile);
+            File.WriteAllText(ymlFile, content.Replace("- ''", ""));
+        }
+
         private void DownloadIcon(string gameFileName, string logoUrl)
         {
             WebClient wc = new WebClient();
@@ -157,22 +169,22 @@ namespace AndroidPackagePublisher
 
             foreach (XmlElement item in rootElemt.ChildNodes)
             {
-                if (item.GetAttribute("banner_ad_unit_id") != null)
+                if (item.GetAttribute("name") == "banner_ad_unit_id")
                 {
                     item.InnerText = bannerId;
                 }
 
-                if (item.GetAttribute("interstitial_ad_unit_id") != null)
+                if (item.GetAttribute("name") == "interstitial_ad_unit_id")
                 {
                     item.InnerText = chapingId;
                 }
 
-                if (item.GetAttribute("googleBannerShow") != null)
+                if (item.GetAttribute("name") == "googleBannerShow")
                 {
                     item.InnerText = isBannerVisable ? "1" : "0";
                 }
 
-                if (item.GetAttribute("googleChaPingShow") != null)
+                if (item.GetAttribute("name") == "googleChaPingShow")
                 {
                     item.InnerText = isChapingVisable ? "1" : "0";
                 }
@@ -193,7 +205,7 @@ namespace AndroidPackagePublisher
 
             foreach (XmlElement item in rootElemt.ChildNodes)
             {
-                if (item.GetAttribute("app_name") != null)
+                if (item.GetAttribute("name") == "app_name")
                 {
                     item.InnerText = gameName;
                     break;
@@ -294,9 +306,25 @@ namespace AndroidPackagePublisher
         public bool IsGameFileIn(string fileName)
         {
             string apkDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录");
-            return File.Exists(Path.Combine(apkDir,fileName));
+            return File.Exists(Path.Combine(apkDir, fileName));
         }
 
+        public string GetKeyWords()
+        {
+            List<string> sList = HttpDataHelper.GetKeyWords(10);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var s in sList)
+            {
+                sb.Append(s);
+                sb.Append(" ");
+            }
+
+            sb.Replace("  ", " ");
+
+            return sb.ToString().Trim();
+        }
 
         private async void button_Shot_GetNewGame_Click(object sender, EventArgs e)
         {
@@ -304,7 +332,18 @@ namespace AndroidPackagePublisher
             {
                 SetStatusInfo("正在执行……");
 
-                _pushGameInfo = HttpDataHelper.GetOneGameInfoAndChangeStateRandomForDev("安卓待提交", "安卓开发中");
+                //_pushGameInfo = HttpDataHelper.GetOneGameInfoAndChangeStateRandomForDev("安卓待提交", "安卓开发中");
+
+                //test
+                _pushGameInfo = new PushGameInfoModel
+                {
+                    FileName = "com.wulven.shadowera-3.1200_apkask.com.apk",
+                    GameName = "Legend Shadow Era",
+                    GameDetails = "ahusdnlfkmgthrjmfdf adoasdordafhth",
+                    LogoPath = "http://gamemanager.pettostudio.net/resoures/wp/moniqi/Choplifter Thinking III L_logo.png",
+                    RealDevAccount = "RealDevAccount",
+                    RealDevPassword = "RealDevPassword"
+                };
 
                 this.textBox_GameDetails.Text = _pushGameInfo.GameDetails;
                 this.textBox_GameName.Text = _pushGameInfo.GameName;
@@ -316,6 +355,9 @@ namespace AndroidPackagePublisher
 
                 SetStatusInfo("反编译中……");
                 await DecompileGame(_pushGameInfo.FileName);
+
+                SetStatusInfo("yml文件修复中……");
+                RepairYmlFile();
 
                 SetStatusInfo("替换图标中……");
                 DownloadIcon(_pushGameInfo.FileName, _pushGameInfo.LogoPath);
@@ -338,12 +380,13 @@ namespace AndroidPackagePublisher
                 SetStatusInfo("复制截屏……");
                 CopyPngFiles(_pushGameInfo.FileName);
 
-                if(IsGameFileIn(_pushGameInfo.FileName))
+                if (IsGameFileIn(_pushGameInfo.FileName))
                 {
-                    string fileDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "android", Path.GetFileNameWithoutExtension(fileName));
-                    string apkDir =
+                    this.textBox_KeyWords.Text = GetKeyWords();
 
-                    this.textBox_PackageDir.Text = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录");                    SetDevelopingButtonEnable();
+                    this.textBox_PackageDir.Text = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录"); SetDevelopingButtonEnable();
+
+                    SetDevelopingButtonEnable();
                     SetTipsInfo("打包成功，请到 安装包目录 下的 apk 文件提交到商店，完成后点击 提交完成 按钮");
                     SetStatusInfo("打包成功.");
                 }
@@ -355,6 +398,54 @@ namespace AndroidPackagePublisher
             catch (Exception ex)
             {
                 SetStatusInfo("打包游戏失败,\n" + ex.Message);
+            }
+        }
+
+        private void button_CopyGameDetails_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox_GameDetails.Text))
+            {
+                Clipboard.SetText(this.textBox_GameDetails.Text);
+            }
+        }
+
+        private void button_CopyDevAccount_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox_DevAccount.Text))
+            {
+                Clipboard.SetText(this.textBox_DevAccount.Text);
+            }
+        }
+
+        private void button_CopyDevPassword_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox_DevPassword.Text))
+            {
+                Clipboard.SetText(this.textBox_DevPassword.Text);
+            }
+        }
+
+        private void button_CopyGameName_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox_GameName.Text))
+            {
+                Clipboard.SetText(this.textBox_GameName.Text);
+            }
+        }
+
+        private void button_OpenPackageDir_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox_PackageDir.Text))
+            {
+                System.Diagnostics.Process.Start("explorer.exe", "\"" + this.textBox_PackageDir.Text + "\"");
+            }
+        }
+
+        private void button_CopyKeyWords_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox_GameName.Text))
+            {
+                Clipboard.SetText(this.textBox_KeyWords.Text);
             }
         }
     }
