@@ -99,6 +99,17 @@ namespace AndroidPackagePublisher
             }
         }
 
+        private void DeleteFrameworkAPk()
+        {
+            string apkPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                @"apktool\framework", "1.apk");
+
+            if (File.Exists(apkPath))
+            {
+                File.Delete(apkPath);
+            }
+        }
+
         private async Task DecompileGame(string fileName)
         {
             string toolsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tools");
@@ -352,6 +363,9 @@ namespace AndroidPackagePublisher
 
                 SetStatusInfo("清理路径中……");
                 ClearTempDir();
+
+                SetStatusInfo("删除1.apk中……");
+                DeleteFrameworkAPk();
 
                 SetStatusInfo("反编译中……");
                 await DecompileGame(_pushGameInfo.FileName);
