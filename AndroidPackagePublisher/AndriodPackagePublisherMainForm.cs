@@ -46,6 +46,7 @@ namespace AndroidPackagePublisher
             this.textBox_DevAccount.Clear();
             this.textBox_DevPassword.Clear();
 
+            this.textBox_KeyWords.Clear();
             this.textBox_KeyWords1.Clear();
             this.textBox_KeyWords2.Clear();
             this.textBox_KeyWords3.Clear();
@@ -322,7 +323,7 @@ namespace AndroidPackagePublisher
 
         public string GetKeyWords()
         {
-            List<string> sList = HttpDataHelper.GetKeyWords(10);
+            List<string> sList = HttpDataHelper.GetKeyWords(15);
 
             StringBuilder sb = new StringBuilder();
 
@@ -343,18 +344,22 @@ namespace AndroidPackagePublisher
             {
                 SetStatusInfo("正在执行……");
 
-                //_pushGameInfo = HttpDataHelper.GetOneGameInfoAndChangeStateRandomForDev("安卓待提交", "安卓开发中");
+                _pushGameInfo = HttpDataHelper.GetOneGameInfoAndChangeStateRandom("安卓待提交", "安卓开发中");
+                //test
+                //_pushGameInfo = new PushGameInfoModel
+                //{
+                //    FileName = "com.wulven.shadowera-3.1200_apkask.com.apk",
+                //    GameName = "Legend Shadow Era",
+                //    GameDetails = "ahusdnlfkmgthrjmfdf adoasdordafhth",
+                //    LogoPath = "http://gamemanager.pettostudio.net/resoures/wp/moniqi/Choplifter Thinking III L_logo.png",
+                //    RealDevAccount = "RealDevAccount",
+                //    RealDevPassword = "RealDevPassword"
+                //};
 
                 //test
-                _pushGameInfo = new PushGameInfoModel
-                {
-                    FileName = "com.wulven.shadowera-3.1200_apkask.com.apk",
-                    GameName = "Legend Shadow Era",
-                    GameDetails = "ahusdnlfkmgthrjmfdf adoasdordafhth",
-                    LogoPath = "http://gamemanager.pettostudio.net/resoures/wp/moniqi/Choplifter Thinking III L_logo.png",
-                    RealDevAccount = "RealDevAccount",
-                    RealDevPassword = "RealDevPassword"
-                };
+                //_pushGameInfo.FileName = "com.wulven.shadowera-3.1200_apkask.com.apk";
+                //_pushGameInfo.LogoPath = "http://gamemanager.pettostudio.net/resoures/wp/moniqi/Choplifter Thinking III L_logo.png";
+
 
                 this.textBox_GameDetails.Text = _pushGameInfo.GameDetails;
                 this.textBox_GameName.Text = _pushGameInfo.GameName;
@@ -398,7 +403,8 @@ namespace AndroidPackagePublisher
                 {
                     this.textBox_KeyWords.Text = GetKeyWords();
 
-                    this.textBox_PackageDir.Text = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录"); SetDevelopingButtonEnable();
+                    this.textBox_PackageDir.Text = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "安装包目录");
+                    SetDevelopingButtonEnable();
 
                     SetDevelopingButtonEnable();
                     SetTipsInfo("打包成功，请到 安装包目录 下的 apk 文件提交到商店，完成后点击 提交完成 按钮");
@@ -460,6 +466,60 @@ namespace AndroidPackagePublisher
             if (!string.IsNullOrWhiteSpace(this.textBox_GameName.Text))
             {
                 Clipboard.SetText(this.textBox_KeyWords.Text);
+            }
+        }
+
+        private void button_SubmitGameInfo_Click(object sender, EventArgs e)
+        {
+            HttpDataHelper.DevSuccessedByDreamSparkAmazon(_pushGameInfo.ID, _pushGameInfo.RealDevAccount, _pushGameInfo.RealDevPassword);
+
+            SetTipsInfo("提交成功，请继续点击 获取新游戏打包 按钮获取下一个游戏");
+            SetStatusInfo("提交成功");
+            SetStartButtonEnable();
+
+            if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "tmp"))
+            {
+                foreach (var f in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "tmp"))
+                {
+                    File.Delete(f);
+                }
+            }
+
+            if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "安装包目录"))
+            {
+                foreach (var f in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "安装包目录"))
+                {
+                    File.Delete(f);
+                }
+            }
+        }
+
+        private void button_DisableIt_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定这个游戏不可用？？？ _(:зゝ∠)_", "提示", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+            {
+                HttpDataHelper.UpdatePushGameStateInfoByID("安卓待确认", _pushGameInfo.ID);
+                HttpDataHelper.UpdateDreamSparkerByDevAccount(_pushGameInfo.RealDevAccount, "amazon待确认");
+
+                SetTipsInfo("游戏不可用信息提交成功，请继续点击 获取新游戏打包 按钮获取下一个游戏");
+                SetStatusInfo("游戏不可用信息提交成功");
+                SetStartButtonEnable();
+
+                if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "tmp"))
+                {
+                    foreach (var f in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "tmp"))
+                    {
+                        File.Delete(f);
+                    }
+                }
+
+                if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "安装包目录"))
+                {
+                    foreach (var f in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "安装包目录"))
+                    {
+                        File.Delete(f);
+                    }
+                }
             }
         }
     }

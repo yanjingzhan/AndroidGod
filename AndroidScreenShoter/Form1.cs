@@ -84,7 +84,7 @@ namespace AndroidScreenShoter
                     Directory.CreateDirectory(tempDir);
                 }
 
-                File.Copy(_currentGameFile, Path.Combine(tempDir, Path.GetFileName(_currentGameFile)),true);
+                File.Copy(_currentGameFile, Path.Combine(tempDir, Path.GetFileName(_currentGameFile)), true);
                 this.textBox_PackageDir.Text = tempDir;
 
                 string screenShotPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "android", Path.GetFileNameWithoutExtension(_currentGameFile));
@@ -128,9 +128,14 @@ namespace AndroidScreenShoter
             if (MessageBox.Show("确定这个游戏不可用？？？", "提示", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
             {
                 string shitPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "android", "shit");
-                if(!Directory.Exists(shitPath))
+                if (!Directory.Exists(shitPath))
                 {
                     Directory.CreateDirectory(shitPath);
+                }
+
+                if (File.Exists(Path.Combine(shitPath, Path.GetFileName(_currentGameFile))))
+                {
+                    File.Delete(Path.Combine(shitPath, Path.GetFileName(_currentGameFile)));
                 }
 
                 File.Move(_currentGameFile, Path.Combine(shitPath, Path.GetFileName(_currentGameFile)));
